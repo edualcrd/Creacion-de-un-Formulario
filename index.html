@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Evento</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Registro de Asistente</h1>
+
+    <!-- FORMULARIO -->
+    <form id="eventoForm" class="needs-validation" novalidate>
+
+      <!--1.  Información personal -->
+      <h4>Información Personal</h4>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Nombre completo</label>
+          <input type="text" name="nombre" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Correo electrónico</label>
+          <input type="email" name="email" class="form-control" required>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Teléfono</label>
+          <input type="tel" name="telefono" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Fecha de nacimiento</label>
+          <input type="date" name="fecha_nacimiento" class="form-control" required>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Género</label><br>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="genero" value="Masculino" required>
+          <label class="form-check-label">Masculino</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="genero" value="Femenino" required>
+          <label class="form-check-label">Femenino</label>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- 2. Información del evento -->
+      <h4>Información del Evento</h4>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Fecha del evento</label>
+          <input type="date" name="fecha_evento" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Tipo de entrada</label>
+          <select name="entrada" class="form-select" required>
+            <option value="">Selecciona una opción</option>
+            <option>General</option>
+            <option>VIP</option>
+            <option>Estudiante</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Preferencias de comida</label><br>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="comida[]" value="Vegetariano">
+          <label class="form-check-label">Vegetariano</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="comida[]" value="Vegano">
+          <label class="form-check-label">Vegano</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="comida[]" value="Sin gluten">
+          <label class="form-check-label">Sin gluten</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="comida[]" value="Sin preferencias">
+          <label class="form-check-label">Sin preferencias</label>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- 3. Información de acceso -->
+      <h4>Información de Acceso</h4>
+      <div class="mb-3">
+        <label class="form-label">Usuario</label>
+        <input type="text" name="usuario" class="form-control" required>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Contraseña</label>
+          <input type="password" name="password" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Confirmar contraseña</label>
+          <input type="password" name="confirmar" class="form-control" required>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- 4. Preferencias de Contacto-->
+      <h4>Preferencias de Contacto</h4>
+      <div class="form-check mb-2">
+        <input type="checkbox" name="notificaciones" class="form-check-input" id="notif">
+        <label for="notif" class="form-check-label">Deseo recibir notificaciones</label>
+      </div>
+      <div class="form-check mb-3">
+        <input type="checkbox" name="terminos" class="form-check-input" id="terminos" required>
+        <label for="terminos" class="form-check-label">Acepto los términos y condiciones</label>
+      </div>
+
+      <hr>
+
+      <!-- Encuesta -->
+      <h4>Encuesta Adicional</h4>
+      <div class="mb-3">
+        <label class="form-label">Calificación de eventos anteriores (1-10)</label>
+        <input type="range" name="calificacion" min="1" max="10" class="form-range">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Comentarios adicionales</label>
+        <textarea name="comentarios" class="form-control" rows="4"></textarea>
+      </div>
+
+      <!-- Archivo -->
+      <div class="mb-3">
+        <label class="form-label">Adjuntar archivo</label>
+        <input type="file" name="archivo" class="form-control">
+      </div>
+
+      <!-- Botón -->
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+    </form>
+
+    <!-- Resultado -->
+    <div id="resultado" class="mt-5"></div>
+  </div>
+
+  <script>
+    document.getElementById('eventoForm').addEventListener('submit', async e => {
+      e.preventDefault();
+
+      // Validación básica de Bootstrap
+      if (!e.target.checkValidity()) {
+        e.stopPropagation();
+        e.target.classList.add('was-validated');
+        return;
+      }
+
+      // Recolectar los datos
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      // Convertir checkbox múltiple (comida) correctamente
+      const comidas = formData.getAll('comida[]');
+      if (comidas.length) data.comida = comidas;
+
+      // Simular envío REST (ficticio)
+      const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+
+      // Mostrar resultado con Bootstrap
+      document.getElementById('resultado').innerHTML = `
+        <div class="alert alert-success">
+          <h4>Datos enviados correctamente:</h4>
+          <pre>${JSON.stringify(result, null, 2)}</pre>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>
